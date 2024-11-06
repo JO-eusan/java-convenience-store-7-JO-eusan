@@ -1,5 +1,6 @@
 package store;
 
+import store.constant.FilePath;
 import store.controller.FileController;
 import store.model.Products;
 import store.model.Promotions;
@@ -10,7 +11,7 @@ public class Application {
 		Products products = new Products();
 
 		FileController fileController = new FileController(promotions, products);
-		fileController.initializeData("src/main/resources/promotions.md", "src/main/resources/products.md");
+		fileController.initializeData(FilePath.PROMOTIONS_MD_PATH, FilePath.PRODUCTS_MD_PATH);
 
 	}
 }
