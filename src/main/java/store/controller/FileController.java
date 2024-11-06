@@ -65,5 +65,6 @@ public class FileController {
 
 			products.addProduct(new Product(name, price, quantity, promotion));
 		}
+		products.addGeneralProduct();
 	}
 }
