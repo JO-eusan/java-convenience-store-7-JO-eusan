@@ -10,6 +10,10 @@ public class Products {
 		this.products = new ArrayList<>();
 	}
 
+	public List<Product> getProducts() {
+		return products;
+	}
+
 	public void addProduct(Product product) {
 		products.add(product);
 	}
@@ -19,7 +23,7 @@ public class Products {
 			Product p = products.get(i);
 
 			if (!hasGeneralProduct(p.getName())) {
-				products.add(i, new Product(p.getName(), p.getPrice(), p.getQuantity(), null));
+				products.add(i+1, new Product(p.getName(), p.getPrice(), 0, null));
 			}
 		}
 	}

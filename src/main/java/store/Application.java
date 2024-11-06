@@ -1,6 +1,7 @@
 package store;
 
 import store.constant.FilePath;
+import store.controller.BuyingController;
 import store.controller.FileController;
 import store.model.Products;
 import store.model.Promotions;
@@ -13,5 +14,7 @@ public class Application {
 		FileController fileController = new FileController(promotions, products);
 		fileController.initializeData(FilePath.PROMOTIONS_MD_PATH, FilePath.PRODUCTS_MD_PATH);
 
+		BuyingController buyingController = new BuyingController(promotions, products);
+		buyingController.startPurchase();
 	}
 }

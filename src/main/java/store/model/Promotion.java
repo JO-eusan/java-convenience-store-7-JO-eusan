@@ -17,4 +17,8 @@ public class Promotion {
 		this.end_date = end_date;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 }
