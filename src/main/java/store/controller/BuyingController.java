@@ -38,11 +38,13 @@ public class BuyingController {
 
 	private void purchase() {
 		try {
-			buyingProducts.buyProduct(products, inputView.readBuyingProduct());
+			buyingProducts.buyProducts(products, inputView.readBuyingProduct());
 		} catch(IllegalArgumentException e) {
 			outputView.printArgumentErrorMessage(e);
 			purchase();
 		}
 
+		buyingProducts.applyPromotions(products);
 	}
+
 }

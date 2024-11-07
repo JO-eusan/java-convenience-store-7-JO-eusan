@@ -14,6 +14,26 @@ public class Products {
 		return products;
 	}
 
+	public Product getPromotionProduct(String name) {
+		for(Product product : products) {
+			if(product.getName().equals(name) && product.getPromotion() != null) {
+				return product;
+			}
+		}
+
+		return null;
+	}
+
+	public Product getGeneralProduct(String name) {
+		for(Product product : products) {
+			if(product.getName().equals(name) && product.getPromotion() == null) {
+				return product;
+			}
+		}
+
+		return null;
+	}
+
 	public void addProduct(Product product) {
 		products.add(product);
 	}

@@ -12,7 +12,7 @@ public class BuyingProducts {
 		this.buyingProducts = new ArrayList<>();
 	}
 
-	public void buyProduct(Products products, String input) {
+	public void buyProducts(Products products, String input) {
 		String[] productsPair = input.split(",");
 		for(String pair : productsPair) {
 			if(pair.equals("")) {
@@ -21,4 +21,17 @@ public class BuyingProducts {
 			buyingProducts.add(new BuyingProduct(products, pair));
 		}
 	}
+
+	public void applyPromotions(Products products) {
+		for(BuyingProduct buyingProduct : buyingProducts) {
+			Product promotionProduct = products.getPromotionProduct(buyingProduct.getName());
+			Product generalProduct = products.getGeneralProduct(buyingProduct.getName());
+
+			if(promotionProduct.getPromotion().checkUsable()) {
+				buyingProduct.applyPromotion(promotionProduct, generalProduct);
+			}
+		}
+	}
+
+
 }

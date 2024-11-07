@@ -17,5 +17,4 @@ public class Promotions {
 	public void addPromotion(String name, Promotion promotion) {
 		promotions.put(name, promotion);
 	}
-
 }

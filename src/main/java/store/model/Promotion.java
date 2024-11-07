@@ -21,4 +21,12 @@ public class Promotion {
 		return name;
 	}
 
+	public int getTotalNumber() {
+		return buyNumber + getNumber;
+	}
+
+	public boolean checkUsable() {
+
+	}
+
 }
