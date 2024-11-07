@@ -22,7 +22,7 @@ public class Promotion {
 	}
 
 	public boolean checkUsable(LocalDate now) {
-		if((now.isEqual(start_date) || now.isAfter(start_date)) && (now.isEqual(end_date) || now.isAfter(end_date))) {
+		if ((now.isEqual(start_date) || now.isAfter(start_date)) && (now.isEqual(end_date) || now.isBefore(end_date))) {
 			return true;
 		}
 		return false;

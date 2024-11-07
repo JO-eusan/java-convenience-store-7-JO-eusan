@@ -32,7 +32,7 @@ public class Product {
 	}
 
 	public void subQuantity(int buyingNumber) {
-		if(quantity < buyingNumber) {
+		if (quantity < buyingNumber) {
 			throw new IllegalArgumentException();
 		}
 		this.quantity -= buyingNumber;
@@ -43,10 +43,10 @@ public class Product {
 		String quantityStr = UserMessage.INVENTORY_OUT_MESSAGE;
 		String promotionStr = "";
 
-		if(quantity > 0) {
+		if (quantity > 0) {
 			quantityStr = String.format(UserMessage.INVENTORY_IN_MESSAGE, quantity);
 		}
-		if(promotion != null) {
+		if (promotion != null) {
 			promotionStr = promotion.getName();
 		}
 		return String.format(UserMessage.INVENTORY_FORMAT, name, price, quantityStr, promotionStr);

@@ -15,8 +15,8 @@ public class Products {
 	}
 
 	public Product findPromotionProduct(String name) {
-		for(Product product : products) {
-			if(product.getName().equals(name) && product.getPromotion() != null) {
+		for (Product product : products) {
+			if (product.getName().equals(name) && product.getPromotion() != null) {
 				return product;
 			}
 		}
@@ -25,8 +25,8 @@ public class Products {
 	}
 
 	public Product findGeneralProduct(String name) {
-		for(Product product : products) {
-			if(product.getName().equals(name) && product.getPromotion() == null) {
+		for (Product product : products) {
+			if (product.getName().equals(name) && product.getPromotion() == null) {
 				return product;
 			}
 		}
@@ -43,7 +43,7 @@ public class Products {
 			Product p = products.get(i);
 
 			if (!hasGeneralProduct(p.getName())) {
-				products.add(i+1, new Product(p.getName(), p.getPrice(), 0, null));
+				products.add(i + 1, new Product(p.getName(), p.getPrice(), 0, null));
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package store.controller;
 
 import store.model.Buyer;
+import store.model.BuyingProduct;
 import store.model.Products;
 import store.model.Promotions;
 import store.view.InputView;
@@ -26,6 +27,7 @@ public class BuyingController {
 		showGreeting();
 		showInventory();
 		purchase();
+		askPromotion();
 	}
 
 	private void showGreeting() {
@@ -45,6 +47,27 @@ public class BuyingController {
 		}
 
 		buyer.applyPromotions(products);
+	}
+
+	private void askPromotion() {
+		for(BuyingProduct buyingProduct : buyer.getBuyingProducts()) {
+			String answer = showQuestion(buyingProduct);
+
+
+		}
+	}
+
+	private String showQuestion(BuyingProduct buyingProduct) {
+		String input = "";
+		try {
+			outputView.printQuestion(buyingProduct);
+			input = inputView.readApplicable();
+		} catch(IllegalArgumentException e) {
+			outputView.printArgumentErrorMessage(e);
+			showQuestion(buyingProduct);
+		}
+
+		return input;
 	}
 
 }

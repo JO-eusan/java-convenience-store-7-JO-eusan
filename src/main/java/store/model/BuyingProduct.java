@@ -1,5 +1,6 @@
 package store.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import store.constant.ErrorMessage;
@@ -32,14 +33,27 @@ public class BuyingProduct {
 		return promotionStatus;
 	}
 
+	public int getPromotionQuantity() {
+		if (promotionProduct != null) {
+
+		}
+		return 0;
+	}
+
+	public int getGeneralQuantity() {
+		return 0;
+	}
+
 	public void applyPromotion() {
-		if(generalProduct.getQuantity() >= quantity) {
+		if (generalProduct.getQuantity() >= quantity) {
 			this.promotionStatus = PromotionStatus.getStatus(false, true);
 		}
-		if(promotionProduct != null && promotionProduct.getQuantity() + generalProduct.getQuantity() >= quantity) {
+		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable(LocalDate.now())
+			&& promotionProduct.getQuantity() + generalProduct.getQuantity() >= quantity) {
 			this.promotionStatus = PromotionStatus.getStatus(true, true);
 		}
-		if(promotionProduct != null && promotionProduct.getQuantity() >= quantity) {
+		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable(LocalDate.now())
+			&& promotionProduct.getQuantity() >= quantity) {
 			this.promotionStatus = PromotionStatus.getStatus(true, false);
 		}
 	}

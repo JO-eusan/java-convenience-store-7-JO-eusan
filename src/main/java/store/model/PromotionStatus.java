@@ -15,13 +15,13 @@ public enum PromotionStatus {
 	}
 
 	public static PromotionStatus getStatus(boolean isApplied, boolean isNotApplied) {
-		if(isApplied && !isNotApplied) {
+		if (isApplied && !isNotApplied) {
 			return APPLIED;
 		}
-		if(!isApplied && isNotApplied) {
+		if (!isApplied && isNotApplied) {
 			return NOT_APPLIED;
 		}
-		if(isApplied && isNotApplied) {
+		if (isApplied && isNotApplied) {
 			return PARTIALLY_APPLIED;
 		}
 		return NO_INVENTORY;

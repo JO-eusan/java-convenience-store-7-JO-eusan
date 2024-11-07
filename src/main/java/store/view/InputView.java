@@ -1,8 +1,8 @@
 package store.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import store.constant.ErrorMessage;
 import store.constant.UserMessage;
-import store.model.PromotionStatus;
 
 public class InputView {
 	public String readBuyingProduct() {
@@ -10,8 +10,14 @@ public class InputView {
 		return Console.readLine();
 	}
 
-	public String readApplicable(PromotionStatus promotionStatus) {
-		return "";
+	public String readApplicable() {
+		String input = Console.readLine();
+
+		if (input.charAt(0) != 'Y' && input.charAt(0) != 'N') {
+			throw new IllegalArgumentException(ErrorMessage.NOT_ANSWER_FORMAT);
+		}
+
+		return input;
 	}
 
 }
