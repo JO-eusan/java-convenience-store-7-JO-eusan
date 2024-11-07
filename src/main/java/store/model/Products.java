@@ -14,7 +14,7 @@ public class Products {
 		return products;
 	}
 
-	public Product getPromotionProduct(String name) {
+	public Product findPromotionProduct(String name) {
 		for(Product product : products) {
 			if(product.getName().equals(name) && product.getPromotion() != null) {
 				return product;
@@ -24,7 +24,7 @@ public class Products {
 		return null;
 	}
 
-	public Product getGeneralProduct(String name) {
+	public Product findGeneralProduct(String name) {
 		for(Product product : products) {
 			if(product.getName().equals(name) && product.getPromotion() == null) {
 				return product;

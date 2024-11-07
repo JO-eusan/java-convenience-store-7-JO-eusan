@@ -1,14 +1,15 @@
 package store.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import store.constant.ErrorMessage;
 
-public class BuyingProducts {
+public class Buyer {
 	private List<BuyingProduct> buyingProducts;
 
-	public BuyingProducts() {
+	public Buyer() {
 		this.buyingProducts = new ArrayList<>();
 	}
 
@@ -24,11 +25,11 @@ public class BuyingProducts {
 
 	public void applyPromotions(Products products) {
 		for(BuyingProduct buyingProduct : buyingProducts) {
-			Product promotionProduct = products.getPromotionProduct(buyingProduct.getName());
-			Product generalProduct = products.getGeneralProduct(buyingProduct.getName());
+			Product promotionProduct = buyingProduct.getPromotionProduct();
+			Product generalProduct = buyingProduct.getGeneralProduct();
 
-			if(promotionProduct.getPromotion().checkUsable()) {
-				buyingProduct.applyPromotion(promotionProduct, generalProduct);
+			if(promotionProduct.getPromotion().checkUsable(LocalDate.now())) {
+				buyingProduct.applyPromotion();
 			}
 		}
 	}

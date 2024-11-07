@@ -21,12 +21,11 @@ public class Promotion {
 		return name;
 	}
 
-	public int getTotalNumber() {
-		return buyNumber + getNumber;
-	}
-
-	public boolean checkUsable() {
-
+	public boolean checkUsable(LocalDate now) {
+		if((now.isEqual(start_date) || now.isAfter(start_date)) && (now.isEqual(end_date) || now.isAfter(end_date))) {
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -5,7 +5,8 @@ import java.util.List;
 import store.constant.ErrorMessage;
 
 public class BuyingProduct {
-	private String name;
+	private Product promotionProduct;
+	private Product generalProduct;
 	private int quantity;
 	private PromotionStatus promotionStatus;
 
@@ -14,26 +15,31 @@ public class BuyingProduct {
 		validateInventory(products, input);
 
 		String[] product = input.substring(1, input.length() - 1).split("-");
-		this.name = product[0];
+		this.promotionProduct = products.findPromotionProduct(product[0]);
+		this.generalProduct = products.findGeneralProduct(product[0]);
 		this.quantity = Integer.parseInt(product[1]);
 	}
 
-	public String getName() {
-		return name;
+	public Product getPromotionProduct() {
+		return promotionProduct;
+	}
+
+	public Product getGeneralProduct() {
+		return generalProduct;
 	}
 
 	public PromotionStatus getPromotionStatus() {
 		return promotionStatus;
 	}
 
-	public void applyPromotion(Product promotion, Product general) {
-		if(general.getQuantity() >= quantity) {
+	public void applyPromotion() {
+		if(generalProduct.getQuantity() >= quantity) {
 			this.promotionStatus = PromotionStatus.getStatus(false, true);
 		}
-		if(promotion != null && promotion.getQuantity() + general.getQuantity() >= quantity) {
+		if(promotionProduct != null && promotionProduct.getQuantity() + generalProduct.getQuantity() >= quantity) {
 			this.promotionStatus = PromotionStatus.getStatus(true, true);
 		}
-		if(promotion != null && promotion.getQuantity() >= quantity) {
+		if(promotionProduct != null && promotionProduct.getQuantity() >= quantity) {
 			this.promotionStatus = PromotionStatus.getStatus(true, false);
 		}
 	}

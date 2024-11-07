@@ -1,6 +1,6 @@
 package store.controller;
 
-import store.model.BuyingProducts;
+import store.model.Buyer;
 import store.model.Products;
 import store.model.Promotions;
 import store.view.InputView;
@@ -9,14 +9,14 @@ import store.view.OutputView;
 public class BuyingController {
 	InputView inputView;
 	OutputView outputView;
-	BuyingProducts buyingProducts;
+	Buyer buyer;
 	Promotions promotions;
 	Products products;
 
 	public BuyingController(Promotions promotions, Products products) {
 		this.inputView = new InputView();
 		this.outputView = new OutputView();
-		this.buyingProducts = new BuyingProducts();
+		this.buyer = new Buyer();
 
 		this.promotions = promotions;
 		this.products = products;
@@ -38,13 +38,13 @@ public class BuyingController {
 
 	private void purchase() {
 		try {
-			buyingProducts.buyProducts(products, inputView.readBuyingProduct());
-		} catch(IllegalArgumentException e) {
+			buyer.buyProducts(products, inputView.readBuyingProduct());
+		} catch (IllegalArgumentException e) {
 			outputView.printArgumentErrorMessage(e);
 			purchase();
 		}
 
-		buyingProducts.applyPromotions(products);
+		buyer.applyPromotions(products);
 	}
 
 }
