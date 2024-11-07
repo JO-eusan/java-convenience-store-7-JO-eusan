@@ -12,6 +12,10 @@ public class OutputView {
 		System.out.println(ErrorMessage.ERROR_FORMAT + e.getMessage());
 	}
 
+	public void printArgumentErrorMessage(IllegalArgumentException e) {
+		System.out.println(ErrorMessage.ERROR_FORMAT + e.getMessage());
+	}
+
 	public void printGreeting() {
 		System.out.println(UserMessage.GREETING_MESSAGE);
 	}
