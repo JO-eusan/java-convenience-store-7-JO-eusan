@@ -31,13 +31,6 @@ public class Product {
 		return promotion;
 	}
 
-	public void subQuantity(int buyingNumber) {
-		if (quantity < buyingNumber) {
-			throw new IllegalArgumentException();
-		}
-		this.quantity -= buyingNumber;
-	}
-
 	@Override
 	public String toString() {
 		String quantityStr = UserMessage.INVENTORY_OUT_MESSAGE;

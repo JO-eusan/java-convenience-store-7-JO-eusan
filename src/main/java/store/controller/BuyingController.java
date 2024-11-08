@@ -51,23 +51,25 @@ public class BuyingController {
 
 	private void askPromotion() {
 		for(BuyingProduct buyingProduct : buyer.getBuyingProducts()) {
-			String answer = showQuestion(buyingProduct);
+			if(outputView.printQuestion(products, buyingProduct)) {
+				String answer = showPromotionQuestion(buyingProduct);
+
+			}
+
 
 
 		}
 	}
 
-	private String showQuestion(BuyingProduct buyingProduct) {
-		String input = "";
+	private String showPromotionQuestion(BuyingProduct buyingProduct) {
 		try {
-			outputView.printQuestion(buyingProduct);
-			input = inputView.readApplicable();
+			String input = inputView.readApplicable();
+			return input;
 		} catch(IllegalArgumentException e) {
 			outputView.printArgumentErrorMessage(e);
-			showQuestion(buyingProduct);
+			showPromotionQuestion(buyingProduct);
 		}
-
-		return input;
+		return "";
 	}
 
 }

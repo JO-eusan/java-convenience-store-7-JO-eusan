@@ -6,8 +6,7 @@ import java.util.List;
 import store.constant.ErrorMessage;
 
 public class BuyingProduct {
-	private Product promotionProduct;
-	private Product generalProduct;
+	private String name;
 	private int quantity;
 	private PromotionStatus promotionStatus;
 
@@ -16,45 +15,55 @@ public class BuyingProduct {
 		validateInventory(products, input);
 
 		String[] product = input.substring(1, input.length() - 1).split("-");
-		this.promotionProduct = products.findPromotionProduct(product[0]);
-		this.generalProduct = products.findGeneralProduct(product[0]);
+		this.name = product[0];
 		this.quantity = Integer.parseInt(product[1]);
 	}
 
-	public Product getPromotionProduct() {
-		return promotionProduct;
+	public String getName() {
+		return name;
 	}
 
-	public Product getGeneralProduct() {
-		return generalProduct;
+	public int getQuantity() {
+		return quantity;
 	}
 
 	public PromotionStatus getPromotionStatus() {
 		return promotionStatus;
 	}
 
-	public int getPromotionQuantity() {
-		if (promotionProduct != null) {
+	public int calculatePromotionQuantity(Products products) {
+		Product promotionProduct = products.findPromotionProduct(name);
 
-		}
-		return 0;
-	}
-
-	public int getGeneralQuantity() {
-		return 0;
-	}
-
-	public void applyPromotion() {
-		if (generalProduct.getQuantity() >= quantity) {
-			this.promotionStatus = PromotionStatus.getStatus(false, true);
-		}
 		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable(LocalDate.now())
-			&& promotionProduct.getQuantity() + generalProduct.getQuantity() >= quantity) {
+			&& promotionProduct.getQuantity() > 0) {
+			Promotion promotion = promotionProduct.getPromotion();
+
+			int applyNumber = 0;
+			int availableQuantity = promotionProduct.getQuantity();
+			while (applyNumber < quantity && applyNumber + promotion.getUnit() <= availableQuantity) {
+				applyNumber += promotion.getUnit();
+			}
+			return applyNumber;
+		}
+		return 0;
+	}
+
+	public int calculateGeneralQuantity(int promotionQuantity) {
+		return Math.max(0, quantity - promotionQuantity);
+	}
+
+	public void applyPromotion(Products products) {
+		int promotionQuantity = calculatePromotionQuantity(products);
+		int generalQuantity = calculateGeneralQuantity(promotionQuantity);
+
+		if (promotionQuantity != 0 && generalQuantity == 0) {
+			this.promotionStatus = PromotionStatus.getStatus(true, false);
+		}
+		if (promotionQuantity != 0 && generalQuantity != 0) {
 			this.promotionStatus = PromotionStatus.getStatus(true, true);
 		}
-		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable(LocalDate.now())
-			&& promotionProduct.getQuantity() >= quantity) {
-			this.promotionStatus = PromotionStatus.getStatus(true, false);
+		if (promotionQuantity == 0 && generalQuantity != 0) {
+			this.promotionStatus = PromotionStatus.getStatus(false, true);
 		}
 	}
 

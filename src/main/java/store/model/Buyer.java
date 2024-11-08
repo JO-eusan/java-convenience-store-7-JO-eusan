@@ -28,10 +28,7 @@ public class Buyer {
 
 	public void applyPromotions(Products products) {
 		for (BuyingProduct buyingProduct : buyingProducts) {
-			Product promotionProduct = buyingProduct.getPromotionProduct();
-			Product generalProduct = buyingProduct.getGeneralProduct();
-
-			buyingProduct.applyPromotion();
+			buyingProduct.applyPromotion(products);
 		}
 	}
 

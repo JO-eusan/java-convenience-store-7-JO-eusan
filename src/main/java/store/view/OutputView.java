@@ -32,13 +32,21 @@ public class OutputView {
 		System.out.println();
 	}
 
-	public void printQuestion(BuyingProduct buyingProduct) {
-		if (buyingProduct.getPromotionStatus() == PromotionStatus.APPLIED) {
-			System.out.printf(UserMessage.APPLIED_QUESTION_MESSAGE, buyingProduct.getGeneralProduct().getName());
+	public boolean printQuestion(Products products, BuyingProduct buyingProduct) {
+		int promotionQuantity = buyingProduct.calculatePromotionQuantity(products);
+		int generalQuantity = buyingProduct.calculateGeneralQuantity(promotionQuantity);
+		int realQuantity = promotionQuantity + generalQuantity;
+
+		if (buyingProduct.getPromotionStatus() == PromotionStatus.APPLIED
+			&& realQuantity > buyingProduct.getQuantity()) {
+			System.out.printf(UserMessage.APPLIED_QUESTION_MESSAGE, buyingProduct.getName(),
+				realQuantity - buyingProduct.getQuantity());
+			return true;
 		}
 		if (buyingProduct.getPromotionStatus() == PromotionStatus.PARTIALLY_APPLIED) {
-			System.out.printf(UserMessage.PARTIALLY_APPLIED_QUESTION_MESSAGE,
-				buyingProduct.getGeneralProduct().getName(), 0);
+			System.out.printf(UserMessage.PARTIALLY_APPLIED_QUESTION_MESSAGE, buyingProduct.getName(), generalQuantity);
+			return true;
 		}
+		return false;
 	}
 }
