@@ -52,6 +52,10 @@ public class OutputView {
 		System.out.printf(UserMessage.PARTIALLY_APPLIED_QUESTION_MESSAGE, buyingProduct.getName(), generalQuantity);
 	}
 
+	public void printRetryQuestion() {
+		System.out.println(UserMessage.RETRY_MESSAGE);
+	}
+
 	public void printReceiptProducts(Receipt receipt, Products products) {
 		System.out.println(UserMessage.RECEIPT_START_MESSAGE);
 		System.out.println(UserMessage.RECEIPT_COLUMN_MESSAGE);
