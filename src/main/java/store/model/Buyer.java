@@ -37,10 +37,9 @@ public class Buyer {
 			int promotionQuantity = buyingProduct.calculatePromotionQuantity(products);
 			int generalQuantity = buyingProduct.calculateGeneralQuantity(promotionQuantity);
 
-			promotionQuantity = appliedPromotion(buyingProduct, promotionQuantity);
-			if(promotionQuantity == Integer.MAX_VALUE) {
-				return;
-			}
+			promotionQuantity = checkAppliedPromotion(buyingProduct, promotionQuantity);
+			generalQuantity = checkPartialAppliedPromotion(buyingProduct, generalQuantity);
+
 			buyingProduct.setFinalQuantity(promotionQuantity, generalQuantity);
 
 			Product promotionProduct = products.findPromotionProduct(buyingProduct.getName());
@@ -57,18 +56,26 @@ public class Buyer {
 		}
 	}
 
-	private int appliedPromotion(BuyingProduct buyingProduct, int promotionQuantity) {
+	private int checkAppliedPromotion(BuyingProduct buyingProduct, int promotionQuantity) {
 		PromotionStatus promotionStatus = buyingProduct.getPromotionStatus();
 		boolean isApplied = buyingProduct.getIsApplied();
 
 		if(promotionStatus == PromotionStatus.APPLIED && !isApplied) {
 			promotionQuantity = buyingProduct.getQuantity();
 		}
-		if(promotionStatus == PromotionStatus.PARTIALLY_APPLIED && !isApplied) {
-			buyingProducts.remove(buyingProduct);
-			return Integer.MAX_VALUE;
-		}
+
 		return promotionQuantity;
+	}
+
+	private int checkPartialAppliedPromotion(BuyingProduct buyingProduct, int generalQuantity) {
+		PromotionStatus promotionStatus = buyingProduct.getPromotionStatus();
+		boolean isApplied = buyingProduct.getIsApplied();
+
+		if(promotionStatus == PromotionStatus.PARTIALLY_APPLIED && !isApplied) {
+			generalQuantity = 0;
+		}
+
+		return generalQuantity;
 	}
 
 }
