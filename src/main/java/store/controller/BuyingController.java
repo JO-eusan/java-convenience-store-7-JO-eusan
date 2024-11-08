@@ -3,6 +3,7 @@ package store.controller;
 import store.model.Buyer;
 import store.model.BuyingProduct;
 import store.model.Products;
+import store.model.PromotionStatus;
 import store.model.Promotions;
 import store.view.InputView;
 import store.view.OutputView;
@@ -28,6 +29,7 @@ public class BuyingController {
 		showInventory();
 		purchase();
 		askPromotion();
+		organizeInventory();
 	}
 
 	private void showGreeting() {
@@ -50,11 +52,17 @@ public class BuyingController {
 	}
 
 	private void askPromotion() {
-		for(BuyingProduct buyingProduct : buyer.getBuyingProducts()) {
-			if(outputView.printQuestion(products, buyingProduct)) {
-				String answer = showPromotionQuestion(buyingProduct);
-				buyingProduct.updateIsApplied(answer);
+		for (BuyingProduct buyingProduct : buyer.getBuyingProducts()) {
+			String answer = "";
+			if (buyingProduct.getPromotionStatus() == PromotionStatus.APPLIED && outputView.printAppliedQuestion(
+				products, buyingProduct)) {
+				answer = showPromotionQuestion(buyingProduct);
 			}
+			if (buyingProduct.getPromotionStatus() == PromotionStatus.PARTIALLY_APPLIED) {
+				outputView.printPurchaseQuestion(products, buyingProduct);
+				answer = showPromotionQuestion(buyingProduct);
+			}
+			buyingProduct.updateIsApplied(answer);
 		}
 	}
 
@@ -62,11 +70,16 @@ public class BuyingController {
 		try {
 			String input = inputView.readApplicable();
 			return input;
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			outputView.printArgumentErrorMessage(e);
 			showPromotionQuestion(buyingProduct);
 		}
 		return "";
+	}
+
+	private void organizeInventory() {
+		buyer.pickProducts(products);
+
 	}
 
 }

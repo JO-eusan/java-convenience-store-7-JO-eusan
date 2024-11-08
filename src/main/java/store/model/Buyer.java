@@ -32,4 +32,41 @@ public class Buyer {
 		}
 	}
 
+	public void pickProducts(Products products) {
+		for(BuyingProduct buyingProduct : buyingProducts) {
+			int promotionQuantity = buyingProduct.calculatePromotionQuantity(products);
+			int generalQuantity = buyingProduct.calculateGeneralQuantity(promotionQuantity);
+
+			promotionQuantity = appliedPromotion(buyingProduct, promotionQuantity);
+			if(promotionQuantity == Integer.MAX_VALUE) {
+				return;
+			}
+			Product promotionProduct = products.findPromotionProduct(buyingProduct.getName());
+			Product generalProduct = products.findGeneralProduct(buyingProduct.getName());
+
+			if(promotionProduct != null) {
+				promotionProduct.subQuantity(promotionQuantity);
+			}
+			if(promotionProduct != null && generalQuantity >= promotionProduct.getQuantity()) {
+				generalQuantity -= promotionProduct.getQuantity();
+				promotionProduct.subQuantity(promotionProduct.getQuantity());
+			}
+			generalProduct.subQuantity(generalQuantity);
+		}
+	}
+
+	private int appliedPromotion(BuyingProduct buyingProduct, int promotionQuantity) {
+		PromotionStatus promotionStatus = buyingProduct.getPromotionStatus();
+		boolean isApplied = buyingProduct.getIsApplied();
+
+		if(promotionStatus == PromotionStatus.APPLIED && !isApplied) {
+			promotionQuantity = buyingProduct.getQuantity();
+		}
+		if(promotionStatus == PromotionStatus.PARTIALLY_APPLIED && !isApplied) {
+			buyingProducts.remove(buyingProduct);
+			return Integer.MAX_VALUE;
+		}
+		return promotionQuantity;
+	}
+
 }

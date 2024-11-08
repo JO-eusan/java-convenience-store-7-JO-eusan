@@ -7,7 +7,6 @@ import store.constant.UserMessage;
 import store.model.BuyingProduct;
 import store.model.Product;
 import store.model.Products;
-import store.model.PromotionStatus;
 
 public class OutputView {
 	public void printFileErrorMessage(FileNotFoundException e) {
@@ -32,21 +31,23 @@ public class OutputView {
 		System.out.println();
 	}
 
-	public boolean printQuestion(Products products, BuyingProduct buyingProduct) {
+	public boolean printAppliedQuestion(Products products, BuyingProduct buyingProduct) {
 		int promotionQuantity = buyingProduct.calculatePromotionQuantity(products);
 		int generalQuantity = buyingProduct.calculateGeneralQuantity(promotionQuantity);
 		int realQuantity = promotionQuantity + generalQuantity;
 
-		if (buyingProduct.getPromotionStatus() == PromotionStatus.APPLIED
-			&& realQuantity > buyingProduct.getQuantity()) {
+		if(realQuantity > buyingProduct.getQuantity()) {
 			System.out.printf(UserMessage.APPLIED_QUESTION_MESSAGE, buyingProduct.getName(),
 				realQuantity - buyingProduct.getQuantity());
 			return true;
 		}
-		if (buyingProduct.getPromotionStatus() == PromotionStatus.PARTIALLY_APPLIED) {
-			System.out.printf(UserMessage.PARTIALLY_APPLIED_QUESTION_MESSAGE, buyingProduct.getName(), generalQuantity);
-			return true;
-		}
 		return false;
+	}
+
+	public void printPurchaseQuestion(Products products, BuyingProduct buyingProduct) {
+		int promotionQuantity = buyingProduct.calculatePromotionQuantity(products);
+		int generalQuantity = buyingProduct.calculateGeneralQuantity(promotionQuantity);
+
+		System.out.printf(UserMessage.PARTIALLY_APPLIED_QUESTION_MESSAGE, buyingProduct.getName(), generalQuantity);
 	}
 }

@@ -28,8 +28,10 @@ public class BuyingProduct {
 		return quantity;
 	}
 
-	public PromotionStatus getPromotionStatus() {
-		return promotionStatus;
+	public PromotionStatus getPromotionStatus() { return promotionStatus; }
+
+	public boolean getIsApplied() {
+		return isApplied;
 	}
 
 	public int calculatePromotionQuantity(Products products) {
@@ -71,7 +73,7 @@ public class BuyingProduct {
 	public void updateIsApplied(String answer) {
 		this.isApplied = true; // 우선 무조건 적용
 
-		if(answer.equals("N")) {
+		if (answer.equals("N")) {
 			this.isApplied = false;
 		}
 	}

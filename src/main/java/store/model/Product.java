@@ -31,6 +31,10 @@ public class Product {
 		return promotion;
 	}
 
+	public void subQuantity(int quantity) {
+		this.quantity -= quantity;
+	}
+
 	@Override
 	public String toString() {
 		String quantityStr = UserMessage.INVENTORY_OUT_MESSAGE;
