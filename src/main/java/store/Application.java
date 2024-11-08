@@ -20,7 +20,7 @@ public class Application {
 		BuyingController buyingController = new BuyingController(promotions, products, buyer);
 		buyingController.startPurchase();
 
-		PaymentController paymentController = new PaymentController(products, buyer);
+		PaymentController paymentController = new PaymentController(buyer, products);
 		paymentController.checkout();
 	}
 }

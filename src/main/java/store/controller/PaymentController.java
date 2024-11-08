@@ -9,20 +9,26 @@ import store.view.OutputView;
 public class PaymentController {
 	InputView inputView;
 	OutputView outputView;
-	Products products;
 	Buyer buyer;
+	Products products;
 	Receipt receipt;
 
-	public PaymentController(Products products, Buyer buyer) {
+	public PaymentController(Buyer buyer, Products products) {
 		this.inputView = new InputView();
 		this.outputView = new OutputView();
 
-		this.products = products;
 		this.buyer = buyer;
+		this.products = products;
 		this.receipt = new Receipt(buyer.getBuyingProducts(), products);
 	}
 
 	public void checkout() {
+		showReceipt();
+	}
 
+	private void showReceipt() {
+		outputView.printReceiptProducts(receipt, products);
+		outputView.printReceiptDum(receipt);
+		outputView.printReceiptPrice(receipt);
 	}
 }

@@ -8,6 +8,8 @@ import store.constant.ErrorMessage;
 public class BuyingProduct {
 	private String name;
 	private int quantity;
+	private int promotionQuantity;
+	private int generalQuantity;
 	private PromotionStatus promotionStatus;
 	private boolean isApplied;
 
@@ -32,6 +34,19 @@ public class BuyingProduct {
 
 	public boolean getIsApplied() {
 		return isApplied;
+	}
+
+	public int getPromotionQuantity() {
+		return promotionQuantity;
+	}
+
+	public int getGeneralQuantity() {
+		return generalQuantity;
+	}
+
+	public void setFinalQuantity(int promotionQuantity, int generalQuantity) {
+		this.promotionQuantity = promotionQuantity;
+		this.generalQuantity = generalQuantity;
 	}
 
 	public int calculatePromotionQuantity(Products products) {

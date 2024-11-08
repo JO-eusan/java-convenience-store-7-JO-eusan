@@ -41,6 +41,8 @@ public class Buyer {
 			if(promotionQuantity == Integer.MAX_VALUE) {
 				return;
 			}
+			buyingProduct.setFinalQuantity(promotionQuantity, generalQuantity);
+
 			Product promotionProduct = products.findPromotionProduct(buyingProduct.getName());
 			Product generalProduct = products.findGeneralProduct(buyingProduct.getName());
 

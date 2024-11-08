@@ -7,6 +7,7 @@ import store.constant.UserMessage;
 import store.model.BuyingProduct;
 import store.model.Product;
 import store.model.Products;
+import store.model.Receipt;
 
 public class OutputView {
 	public void printFileErrorMessage(FileNotFoundException e) {
@@ -49,5 +50,31 @@ public class OutputView {
 		int generalQuantity = buyingProduct.calculateGeneralQuantity(promotionQuantity);
 
 		System.out.printf(UserMessage.PARTIALLY_APPLIED_QUESTION_MESSAGE, buyingProduct.getName(), generalQuantity);
+	}
+
+	public void printReceiptProducts(Receipt receipt, Products products) {
+		System.out.println(UserMessage.RECEIPT_START_MESSAGE);
+		System.out.println(UserMessage.RECEIPT_COLUMN_MESSAGE);
+
+		for(String productName : receipt.getBuyingNames()) {
+			int totalQuantity = receipt.getTotalQuantity(productName);
+			int totalPrice = products.findGeneralProduct(productName).getPrice() * totalQuantity;
+			System.out.printf(UserMessage.RECEIPT_PRODUCTS_FORMAT, productName, totalQuantity, totalPrice);
+		}
+	}
+
+	public void printReceiptDum(Receipt receipt) {
+		System.out.println(UserMessage.RECEIPT_DUM_MESSAGE);
+
+		for(String productName : receipt.getBuyingNames()) {
+			int promotionNum = receipt.getPromotionDumQuantity(productName);
+			if(promotionNum != 0) {
+				System.out.printf(UserMessage.RECEIPT_DUM_PRODUCTS_FORMAT, productName, promotionNum);
+			}
+		}
+	}
+
+	public void printReceiptPrice(Receipt receipt) {
+		System.out.println(UserMessage.RECEIPT_START_PAYMENT);
 	}
 }
