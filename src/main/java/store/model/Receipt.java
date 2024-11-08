@@ -48,6 +48,19 @@ public class Receipt {
 		return totalQuantity;
 	}
 
+	public int getMembershipDiscount(Membership membership, boolean isMembership) {
+		int totalGeneralPrice = 0;
+		for (Map.Entry<Product, Integer> entry : buyingCounter.entrySet()) {
+			Product product = entry.getKey();
+			int num = entry.getValue();
+
+			if (product.getPromotion() == null) {
+				totalGeneralPrice += num * product.getPrice();
+			}
+		}
+		return membership.calculateDiscountAmount(totalGeneralPrice, isMembership);
+	}
+
 	private List<String> writeCategory(List<BuyingProduct> buyingProducts) {
 		List<String> buyingNames = new ArrayList<>();
 		for(BuyingProduct buyingProduct : buyingProducts) {

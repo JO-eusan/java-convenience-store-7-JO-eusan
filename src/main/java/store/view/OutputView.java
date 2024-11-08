@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import store.constant.ErrorMessage;
 import store.constant.UserMessage;
 import store.model.BuyingProduct;
+import store.model.Membership;
 import store.model.Product;
 import store.model.Products;
 import store.model.Receipt;
@@ -56,6 +57,10 @@ public class OutputView {
 		System.out.println(UserMessage.RETRY_MESSAGE);
 	}
 
+	public void printMembershipQuestion() {
+		System.out.println(UserMessage.MEMBERSHIP_QUESTION_MESSAGE);
+	}
+
 	public void printReceiptProducts(Receipt receipt, Products products) {
 		System.out.println(UserMessage.RECEIPT_START_MESSAGE);
 		System.out.println(UserMessage.RECEIPT_COLUMN_MESSAGE);
@@ -78,7 +83,22 @@ public class OutputView {
 		}
 	}
 
-	public void printReceiptPrice(Receipt receipt) {
+	public void printReceiptPrice(Receipt receipt, Products products, boolean isMembership) {
 		System.out.println(UserMessage.RECEIPT_START_PAYMENT);
+
+		int totalQuantity = 0, totalPrice = 0;
+		int promotionDiscount = 0;
+		for(String productName : receipt.getBuyingNames()) {
+			int quantity = receipt.getTotalQuantity(productName);
+			totalQuantity += receipt.getTotalQuantity(productName);
+			totalPrice += products.findGeneralProduct(productName).getPrice() * quantity;
+			promotionDiscount += receipt.getPromotionDumQuantity(productName) * products.findGeneralProduct(productName).getPrice();
+		}
+		System.out.printf(UserMessage.RECEIPT_TOTAL_PAYMENT, "총구매액", totalQuantity, totalPrice);
+		System.out.printf(UserMessage.RECEIPT_DISCOUNT_FORMAT, "행사할인", promotionDiscount);
+		System.out.printf(UserMessage.RECEIPT_DISCOUNT_FORMAT, "멤버십할인", receipt.getMembershipDiscount(Membership.DEFAULT, isMembership));
+
+		int finalPrice = totalPrice - promotionDiscount - receipt.getMembershipDiscount(Membership.DEFAULT, isMembership);
+		System.out.printf(UserMessage.RECEIPT_PAYMENT_FORMAT, "내실돈", finalPrice);
 	}
 }

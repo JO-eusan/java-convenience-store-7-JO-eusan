@@ -76,23 +76,23 @@ public class BuyingController {
 			String answer = "";
 			if (buyingProduct.getPromotionStatus() == PromotionStatus.APPLIED
 				&& outputView.printAppliedQuestion(products, buyingProduct)) {
-				answer = showPromotionQuestion(buyingProduct);
+				answer = showQuestion();
 			}
 			if (buyingProduct.getPromotionStatus() == PromotionStatus.PARTIALLY_APPLIED) {
 				outputView.printPurchaseQuestion(products, buyingProduct);
-				answer = showPromotionQuestion(buyingProduct);
+				answer = showQuestion();
 			}
 			buyingProduct.updateIsApplied(answer);
 		}
 	}
 
-	private String showPromotionQuestion(BuyingProduct buyingProduct) {
+	private String showQuestion() {
 		try {
 			String input = inputView.readApplicable();
 			return input;
 		} catch (IllegalArgumentException e) {
 			outputView.printArgumentErrorMessage(e);
-			showPromotionQuestion(buyingProduct);
+			showQuestion();
 		}
 		return "";
 	}
@@ -102,9 +102,16 @@ public class BuyingController {
 	}
 
 	private void showReceipt() {
+		outputView.printMembershipQuestion();
+		String input = showQuestion();
+		boolean isMembership = false;
+		if(input.equals("Y")) {
+			isMembership = true;
+		}
+
 		Receipt receipt = new Receipt(buyer.getBuyingProducts(), products);
 		outputView.printReceiptProducts(receipt, products);
 		outputView.printReceiptDum(receipt);
-		outputView.printReceiptPrice(receipt);
+		outputView.printReceiptPrice(receipt, products, isMembership);
 	}
 }
