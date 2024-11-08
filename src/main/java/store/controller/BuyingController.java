@@ -5,6 +5,7 @@ import store.model.BuyingProduct;
 import store.model.Products;
 import store.model.PromotionStatus;
 import store.model.Promotions;
+import store.model.Receipt;
 import store.view.InputView;
 import store.view.OutputView;
 
@@ -15,11 +16,11 @@ public class BuyingController {
 	Promotions promotions;
 	Products products;
 
-	public BuyingController(Promotions promotions, Products products) {
+	public BuyingController(Promotions promotions, Products products, Buyer buyer) {
 		this.inputView = new InputView();
 		this.outputView = new OutputView();
-		this.buyer = new Buyer();
 
+		this.buyer = buyer;
 		this.promotions = promotions;
 		this.products = products;
 	}
@@ -79,7 +80,5 @@ public class BuyingController {
 
 	private void organizeInventory() {
 		buyer.pickProducts(products);
-
 	}
-
 }
