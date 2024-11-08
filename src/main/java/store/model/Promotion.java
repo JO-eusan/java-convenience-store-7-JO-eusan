@@ -2,6 +2,8 @@ package store.model;
 
 import java.time.LocalDate;
 
+import camp.nextstep.edu.missionutils.DateTimes;
+
 public class Promotion {
 	private String name;
 	private int buyNumber;
@@ -34,10 +36,10 @@ public class Promotion {
 	}
 
 	public boolean checkUsable(LocalDate now) {
-		if ((now.isEqual(start_date) || now.isAfter(start_date)) && (now.isEqual(end_date) || now.isBefore(end_date))) {
-			return true;
-		}
-		return false;
+		boolean isAfterStartDate = now.isEqual(start_date) || now.isAfter(start_date);
+		boolean isBeforeEndDate = now.isEqual(end_date) || now.isBefore(end_date);
+
+		return isAfterStartDate && isBeforeEndDate;
 	}
 
 }

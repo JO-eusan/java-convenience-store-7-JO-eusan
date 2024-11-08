@@ -3,6 +3,7 @@ package store.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import store.constant.ErrorMessage;
 
 public class BuyingProduct {
@@ -51,8 +52,9 @@ public class BuyingProduct {
 
 	public int calculatePromotionQuantity(Products products) {
 		Product promotionProduct = products.findPromotionProduct(name);
+		LocalDate today = DateTimes.now().toLocalDate();
 
-		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable(LocalDate.now())
+		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable(today)
 			&& promotionProduct.getQuantity() > 0) {
 			Promotion promotion = promotionProduct.getPromotion();
 
