@@ -53,11 +53,8 @@ public class BuyingController {
 		for(BuyingProduct buyingProduct : buyer.getBuyingProducts()) {
 			if(outputView.printQuestion(products, buyingProduct)) {
 				String answer = showPromotionQuestion(buyingProduct);
-
+				buyingProduct.updateIsApplied(answer);
 			}
-
-
-
 		}
 	}
 

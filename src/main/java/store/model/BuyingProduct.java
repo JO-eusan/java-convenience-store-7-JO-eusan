@@ -9,6 +9,7 @@ public class BuyingProduct {
 	private String name;
 	private int quantity;
 	private PromotionStatus promotionStatus;
+	private boolean isApplied;
 
 	public BuyingProduct(Products products, String input) {
 		validateFormat(input);
@@ -64,6 +65,14 @@ public class BuyingProduct {
 		}
 		if (promotionQuantity == 0 && generalQuantity != 0) {
 			this.promotionStatus = PromotionStatus.getStatus(false, true);
+		}
+	}
+
+	public void updateIsApplied(String answer) {
+		this.isApplied = true; // 우선 무조건 적용
+
+		if(answer.equals("N")) {
+			this.isApplied = false;
 		}
 	}
 
