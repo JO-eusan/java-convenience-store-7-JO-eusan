@@ -1,4 +1,4 @@
-package store.model;
+package store.model.domain;
 
 public enum PromotionStatus {
 	APPLIED(true, false),

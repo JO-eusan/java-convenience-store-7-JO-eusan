@@ -3,6 +3,8 @@ package store.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import store.model.domain.Promotion;
+
 public class Promotions {
 	private Map<String, Promotion> promotions;
 

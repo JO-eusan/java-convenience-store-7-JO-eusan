@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import store.model.Product;
-import store.model.Promotion;
+import store.model.domain.Product;
+import store.model.domain.Promotion;
 import store.view.OutputView;
 import store.model.Products;
 import store.model.Promotions;

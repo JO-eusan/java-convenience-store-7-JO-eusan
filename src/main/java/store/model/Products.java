@@ -3,6 +3,8 @@ package store.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import store.model.domain.Product;
+
 public class Products {
 	private List<Product> products;
 

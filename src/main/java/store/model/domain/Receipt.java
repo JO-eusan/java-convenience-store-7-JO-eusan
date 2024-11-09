@@ -1,9 +1,11 @@
-package store.model;
+package store.model.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import store.model.Products;
 
 public class Receipt {
 	private List<String> buyingNames;

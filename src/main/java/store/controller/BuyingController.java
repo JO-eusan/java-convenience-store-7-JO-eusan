@@ -1,11 +1,11 @@
 package store.controller;
 
 import store.model.Buyer;
-import store.model.BuyingProduct;
+import store.model.domain.BuyingProduct;
 import store.model.Products;
-import store.model.PromotionStatus;
+import store.model.domain.PromotionStatus;
 import store.model.Promotions;
-import store.model.Receipt;
+import store.model.domain.Receipt;
 import store.view.InputView;
 import store.view.OutputView;
 

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import store.constant.ErrorMessage;
+import store.model.domain.BuyingProduct;
+import store.model.domain.Product;
+import store.model.domain.PromotionStatus;
 
 public class Buyer {
 	private List<BuyingProduct> buyingProducts;

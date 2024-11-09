@@ -1,8 +1,9 @@
-package store.model;
+package store.model.domain;
 
 import java.util.List;
 
 import store.constant.ErrorMessage;
+import store.model.Products;
 
 public class BuyingProduct {
 	private String name;

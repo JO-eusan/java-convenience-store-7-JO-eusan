@@ -1,4 +1,4 @@
-package store.model;
+package store.model.domain;
 
 public enum Membership {
 	DEFAULT(0.3, 8000);

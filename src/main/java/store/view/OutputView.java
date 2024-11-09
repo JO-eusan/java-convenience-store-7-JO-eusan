@@ -4,11 +4,11 @@ import java.io.FileNotFoundException;
 
 import store.constant.ErrorMessage;
 import store.constant.UserMessage;
-import store.model.BuyingProduct;
-import store.model.Membership;
-import store.model.Product;
+import store.model.domain.BuyingProduct;
+import store.model.domain.Membership;
+import store.model.domain.Product;
 import store.model.Products;
-import store.model.Receipt;
+import store.model.domain.Receipt;
 
 public class OutputView {
 	public void printFileErrorMessage(FileNotFoundException e) {
