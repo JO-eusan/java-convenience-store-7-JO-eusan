@@ -20,7 +20,6 @@ public class Receipt {
 
 	public int getPromotionDumQuantity(String productName) {
 		int dumQuantity = 0;
-
 		for (Map.Entry<Product, Integer> entry : buyingCounter.entrySet()) {
 			Product product = entry.getKey();
 			int num = entry.getValue();
@@ -29,13 +28,11 @@ public class Receipt {
 				dumQuantity = num/product.getPromotion().getUnit() * product.getPromotion().getGetNumber();
 			}
 		}
-
 		return dumQuantity;
 	}
 
 	public int getTotalQuantity(String productName) {
 		int totalQuantity = 0;
-
 		for (Map.Entry<Product, Integer> entry : buyingCounter.entrySet()) {
 			Product product = entry.getKey();
 			int quantity = entry.getValue();
@@ -44,7 +41,6 @@ public class Receipt {
 				totalQuantity += quantity;
 			}
 		}
-
 		return totalQuantity;
 	}
 

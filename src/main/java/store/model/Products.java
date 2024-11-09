@@ -20,7 +20,6 @@ public class Products {
 				return product;
 			}
 		}
-
 		return null;
 	}
 
@@ -30,7 +29,6 @@ public class Products {
 				return product;
 			}
 		}
-
 		return null;
 	}
 

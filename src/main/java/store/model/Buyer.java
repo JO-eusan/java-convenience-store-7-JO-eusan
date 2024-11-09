@@ -17,8 +17,7 @@ public class Buyer {
 	}
 
 	public void buyProducts(Products products, String input) {
-		String[] productsPair = input.split(",");
-		for (String pair : productsPair) {
+		for (String pair : input.split(",")) {
 			if (pair.equals("")) {
 				throw new IllegalArgumentException(ErrorMessage.INPUT_FORMAT_ERROR_MESSAGE);
 			}

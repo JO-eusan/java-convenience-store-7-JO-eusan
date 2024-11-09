@@ -1,9 +1,7 @@
 package store.model;
 
-import java.time.LocalDate;
 import java.util.List;
 
-import camp.nextstep.edu.missionutils.DateTimes;
 import store.constant.ErrorMessage;
 
 public class BuyingProduct {
@@ -31,7 +29,9 @@ public class BuyingProduct {
 		return quantity;
 	}
 
-	public PromotionStatus getPromotionStatus() { return promotionStatus; }
+	public PromotionStatus getPromotionStatus() {
+		return promotionStatus;
+	}
 
 	public boolean getIsApplied() {
 		return isApplied;
@@ -52,18 +52,16 @@ public class BuyingProduct {
 
 	public int calculatePromotionQuantity(Products products) {
 		Product promotionProduct = products.findPromotionProduct(name);
-		LocalDate today = DateTimes.now().toLocalDate();
-
-		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable(today)
-			&& promotionProduct.getQuantity() > 0) {
+		if (promotionProduct != null) {
 			Promotion promotion = promotionProduct.getPromotion();
 
-			int applyNumber = 0;
-			int availableQuantity = promotionProduct.getQuantity();
-			while (applyNumber < quantity && applyNumber + promotion.getUnit() <= availableQuantity) {
-				applyNumber += promotion.getUnit();
+			if(promotion.checkUsable() && promotionProduct.getQuantity() > 0) {
+				int applyNumber = 0;
+				while (applyNumber < quantity && applyNumber + promotion.getUnit() <= promotionProduct.getQuantity()) {
+					applyNumber += promotion.getUnit();
+				}
+				return applyNumber;
 			}
-			return applyNumber;
 		}
 		return 0;
 	}

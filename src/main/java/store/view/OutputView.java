@@ -86,8 +86,7 @@ public class OutputView {
 	public void printReceiptPrice(Receipt receipt, Products products, boolean isMembership) {
 		System.out.println(UserMessage.RECEIPT_START_PAYMENT);
 
-		int totalQuantity = 0, totalPrice = 0;
-		int promotionDiscount = 0;
+		int totalQuantity = 0, totalPrice = 0, promotionDiscount = 0;
 		for(String productName : receipt.getBuyingNames()) {
 			int quantity = receipt.getTotalQuantity(productName);
 			totalQuantity += receipt.getTotalQuantity(productName);

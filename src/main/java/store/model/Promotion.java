@@ -35,7 +35,8 @@ public class Promotion {
 		return buyNumber + getNumber;
 	}
 
-	public boolean checkUsable(LocalDate now) {
+	public boolean checkUsable( ) {
+		LocalDate now = DateTimes.now().toLocalDate();
 		boolean isAfterStartDate = now.isEqual(start_date) || now.isAfter(start_date);
 		boolean isBeforeEndDate = now.isEqual(end_date) || now.isBefore(end_date);
 
