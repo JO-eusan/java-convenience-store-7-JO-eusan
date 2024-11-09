@@ -1,6 +1,5 @@
 package store.controller;
 
-import jdk.management.jfr.RecordingInfo;
 import store.model.Buyer;
 import store.model.BuyingProduct;
 import store.model.Products;
@@ -30,7 +29,7 @@ public class BuyingController {
 		do {
 			showGreeting();
 			showInventory();
-			purchase();
+			executePurchase();
 			askPromotion();
 			organizeInventory();
 			showReceipt();
@@ -41,15 +40,18 @@ public class BuyingController {
 		outputView.printRetryQuestion();
 		try {
 			String input = inputView.readApplicable();
-			if(input.equals("Y")) {
-				this.buyer = new Buyer();
-			}
+			resetBuyer(input);
 			return input;
 		} catch (IllegalArgumentException e) {
 			outputView.printArgumentErrorMessage(e);
-			showRetryQuestion();
+			return showRetryQuestion();
 		}
-		return "";
+	}
+
+	private void resetBuyer(String input) {
+		if(input.equals("Y")) {
+			this.buyer = new Buyer();
+		}
 	}
 
 	private void showGreeting() {
@@ -60,12 +62,12 @@ public class BuyingController {
 		outputView.printInventory(products);
 	}
 
-	private void purchase() {
+	private void executePurchase() {
 		try {
 			buyer.buyProducts(products, inputView.readBuyingProduct());
 		} catch (IllegalArgumentException e) {
 			outputView.printArgumentErrorMessage(e);
-			purchase();
+			executePurchase();
 		}
 
 		buyer.applyPromotions(products);
@@ -73,28 +75,24 @@ public class BuyingController {
 
 	private void askPromotion() {
 		for (BuyingProduct buyingProduct : buyer.getBuyingProducts()) {
-			String answer = "";
 			if (buyingProduct.getPromotionStatus() == PromotionStatus.APPLIED
 				&& outputView.printAppliedQuestion(products, buyingProduct)) {
-				answer = showQuestion();
+				buyingProduct.updateIsApplied(showQuestion());
 			}
 			if (buyingProduct.getPromotionStatus() == PromotionStatus.PARTIALLY_APPLIED) {
 				outputView.printPurchaseQuestion(products, buyingProduct);
-				answer = showQuestion();
+				buyingProduct.updateIsApplied(showQuestion());
 			}
-			buyingProduct.updateIsApplied(answer);
 		}
 	}
 
 	private String showQuestion() {
 		try {
-			String input = inputView.readApplicable();
-			return input;
+			return inputView.readApplicable();
 		} catch (IllegalArgumentException e) {
 			outputView.printArgumentErrorMessage(e);
-			showQuestion();
+			return showQuestion();
 		}
-		return "";
 	}
 
 	private void organizeInventory() {
@@ -103,11 +101,7 @@ public class BuyingController {
 
 	private void showReceipt() {
 		outputView.printMembershipQuestion();
-		String input = showQuestion();
-		boolean isMembership = false;
-		if(input.equals("Y")) {
-			isMembership = true;
-		}
+		boolean isMembership = showQuestion().equals("Y");
 
 		Receipt receipt = new Receipt(buyer.getBuyingProducts(), products);
 		outputView.printReceiptProducts(receipt, products);

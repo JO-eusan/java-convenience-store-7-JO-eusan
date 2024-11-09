@@ -1,7 +1,6 @@
 package store;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
-import store.model.Promotion;
 
 import org.junit.jupiter.api.Test;
 
