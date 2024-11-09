@@ -3,7 +3,6 @@ package store;
 import store.constant.FilePath;
 import store.controller.BuyingController;
 import store.controller.FileController;
-import store.model.Buyer;
 import store.model.Products;
 import store.model.Promotions;
 

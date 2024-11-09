@@ -14,7 +14,7 @@ public class InputView {
 		String input = Console.readLine();
 
 		if (input.charAt(0) != 'Y' && input.charAt(0) != 'N') {
-			throw new IllegalArgumentException(ErrorMessage.NOT_ANSWER_FORMAT);
+			throw new IllegalArgumentException(ErrorMessage.NOT_ANSWER_FORMAT_ERROR_MESSAGE);
 		}
 
 		return input;
