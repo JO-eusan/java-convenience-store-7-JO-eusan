@@ -12,8 +12,8 @@ public enum Membership {
 	}
 
 	public int calculateDiscountAmount(int productPrice, boolean isMembership) {
-		if(isMembership) {
-			int discountAmount = (int) (productPrice * discount);
+		if (isMembership) {
+			int discountAmount = (int)(productPrice * discount);
 			return Math.min(discountAmount, maxPrice);
 		}
 		return 0;

@@ -49,7 +49,7 @@ public class BuyingController {
 	}
 
 	private void resetBuyer(String input) {
-		if(input.equals("Y")) {
+		if (input.equals("Y")) {
 			this.buyer = new Buyer();
 		}
 	}

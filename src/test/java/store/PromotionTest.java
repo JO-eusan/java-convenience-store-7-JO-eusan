@@ -34,6 +34,6 @@ public class PromotionTest extends NsTest {
 
 	@Override
 	public void runMain() {
-		Application.main(new String[]{});
+		Application.main(new String[] {});
 	}
 }

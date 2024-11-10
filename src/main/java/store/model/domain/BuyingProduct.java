@@ -53,15 +53,15 @@ public class BuyingProduct {
 
 	public int calculatePromotionQuantity(Products products) {
 		Product promotionProduct = products.findPromotionProduct(name);
-		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable() && promotionProduct.getQuantity() > 0) {
-			int applyNumber = 0;
+		int applyNumber = 0;
+		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable()
+			&& promotionProduct.getQuantity() > 0) {
 			while (applyNumber < quantity
 				&& applyNumber + promotionProduct.getPromotion().getUnit() <= promotionProduct.getQuantity()) {
 				applyNumber += promotionProduct.getPromotion().getUnit();
 			}
-			return applyNumber;
 		}
-		return 0;
+		return applyNumber;
 	}
 
 	public int calculateGeneralQuantity(int promotionQuantity) {

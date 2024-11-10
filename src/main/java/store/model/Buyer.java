@@ -67,7 +67,7 @@ public class Buyer {
 		PromotionStatus promotionStatus = buyingProduct.getPromotionStatus();
 		boolean isApplied = buyingProduct.getIsApplied();
 
-		if(promotionStatus == PromotionStatus.APPLIED && !isApplied) {
+		if (promotionStatus == PromotionStatus.APPLIED && !isApplied) {
 			promotionQuantity = buyingProduct.getQuantity();
 		}
 
@@ -78,7 +78,7 @@ public class Buyer {
 		PromotionStatus promotionStatus = buyingProduct.getPromotionStatus();
 		boolean isApplied = buyingProduct.getIsApplied();
 
-		if(promotionStatus == PromotionStatus.PARTIALLY_APPLIED && !isApplied) {
+		if (promotionStatus == PromotionStatus.PARTIALLY_APPLIED && !isApplied) {
 			generalQuantity = 0;
 		}
 

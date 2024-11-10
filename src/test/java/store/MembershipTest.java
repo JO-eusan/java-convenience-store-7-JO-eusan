@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 
-public class MembershipTest extends NsTest  {
+public class MembershipTest extends NsTest {
 	@Test
 	void 일반상품에_멤버십_적용() {
 		assertSimpleTest(() -> {
@@ -34,6 +34,6 @@ public class MembershipTest extends NsTest  {
 
 	@Override
 	public void runMain() {
-		Application.main(new String[]{});
+		Application.main(new String[] {});
 	}
 }

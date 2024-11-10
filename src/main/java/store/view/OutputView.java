@@ -38,7 +38,7 @@ public class OutputView {
 		int generalQuantity = buyingProduct.calculateGeneralQuantity(promotionQuantity);
 		int realQuantity = promotionQuantity + generalQuantity;
 
-		if(realQuantity > buyingProduct.getQuantity()) {
+		if (realQuantity > buyingProduct.getQuantity()) {
 			System.out.printf(UserMessage.APPLIED_QUESTION_MESSAGE, buyingProduct.getName(),
 				realQuantity - buyingProduct.getQuantity());
 			return true;
@@ -65,7 +65,7 @@ public class OutputView {
 		System.out.println(UserMessage.RECEIPT_START_MESSAGE);
 		System.out.println(UserMessage.RECEIPT_COLUMN_MESSAGE);
 
-		for(String productName : receipt.getBuyingNames()) {
+		for (String productName : receipt.getBuyingNames()) {
 			int totalQuantity = receipt.getTotalQuantity(productName);
 			int totalPrice = products.findGeneralProduct(productName).getPrice() * totalQuantity;
 			System.out.printf(UserMessage.RECEIPT_PRODUCTS_FORMAT, productName, totalQuantity, totalPrice);
@@ -75,9 +75,9 @@ public class OutputView {
 	public void printReceiptDum(Receipt receipt) {
 		System.out.println(UserMessage.RECEIPT_DUM_MESSAGE);
 
-		for(String productName : receipt.getBuyingNames()) {
+		for (String productName : receipt.getBuyingNames()) {
 			int promotionNum = receipt.getPromotionDumQuantity(productName);
-			if(promotionNum != 0) {
+			if (promotionNum != 0) {
 				System.out.printf(UserMessage.RECEIPT_DUM_PRODUCTS_FORMAT, productName, promotionNum);
 			}
 		}
@@ -87,12 +87,12 @@ public class OutputView {
 		int totalQuantity = calculateTotalQuantity(receipt);
 		int totalPrice = calculateTotalPrice(receipt, products);
 		int promotionDiscount = calculatePromotionDiscount(receipt, products);
-		int finalPrice = totalPrice - promotionDiscount - receipt.getMembershipDiscount(Membership.DEFAULT, isMembership);
-
+		int membershipDiscount = receipt.getMembershipDiscount(Membership.DEFAULT, isMembership);
+		int finalPrice = totalPrice - promotionDiscount - membershipDiscount;
 		System.out.println(UserMessage.RECEIPT_START_PAYMENT);
 		System.out.printf(UserMessage.RECEIPT_TOTAL_PAYMENT, "총구매액", totalQuantity, totalPrice);
 		System.out.printf(UserMessage.RECEIPT_DISCOUNT_FORMAT, "행사할인", Math.min(0, -promotionDiscount));
-		System.out.printf(UserMessage.RECEIPT_DISCOUNT_FORMAT, "멤버십할인", Math.min(0, -receipt.getMembershipDiscount(Membership.DEFAULT, isMembership)));
+		System.out.printf(UserMessage.RECEIPT_DISCOUNT_FORMAT, "멤버십할인", Math.min(0, -membershipDiscount));
 		System.out.printf(UserMessage.RECEIPT_PAYMENT_FORMAT, "내실돈", finalPrice);
 	}
 
