@@ -23,10 +23,6 @@ public class Promotion {
 		return name;
 	}
 
-	public int getBuyNumber() {
-		return buyNumber;
-	}
-
 	public int getGetNumber() {
 		return getNumber;
 	}

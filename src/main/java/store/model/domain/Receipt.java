@@ -27,7 +27,7 @@ public class Receipt {
 			int num = entry.getValue();
 
 			if (product.getName().equals(productName) && product.getPromotion() != null) {
-				dumQuantity = num/product.getPromotion().getUnit() * product.getPromotion().getGetNumber();
+				dumQuantity = num / product.getPromotion().getUnit() * product.getPromotion().getGetNumber();
 			}
 		}
 		return dumQuantity;
@@ -61,7 +61,7 @@ public class Receipt {
 
 	private List<String> writeCategory(List<BuyingProduct> buyingProducts) {
 		List<String> buyingNames = new ArrayList<>();
-		for(BuyingProduct buyingProduct : buyingProducts) {
+		for (BuyingProduct buyingProduct : buyingProducts) {
 			buyingNames.add(buyingProduct.getName());
 		}
 		return buyingNames;
@@ -70,17 +70,17 @@ public class Receipt {
 	private HashMap<Product, Integer> writeProducts(List<BuyingProduct> buyingProducts, Products products) {
 		HashMap<Product, Integer> counter = new HashMap<>();
 		for (BuyingProduct buyingProduct : buyingProducts) {
-			int promotionQuantity = buyingProduct.getPromotionQuantity();
-			int generalQuantity = buyingProduct.getGeneralQuantity();
-
-			Product promotionProduct = products.findPromotionProduct(buyingProduct.getName());
-			Product generalProduct = products.findGeneralProduct(buyingProduct.getName());
-
-			if(promotionProduct != null) {
-				counter.put(promotionProduct, promotionQuantity);
-			}
-			counter.put(generalProduct, generalQuantity);
+			addProductQuantity(counter, products.findPromotionProduct(buyingProduct.getName()),
+				buyingProduct.getPromotionQuantity());
+			addProductQuantity(counter, products.findGeneralProduct(buyingProduct.getName()),
+				buyingProduct.getGeneralQuantity());
 		}
 		return counter;
+	}
+
+	private void addProductQuantity(HashMap<Product, Integer> counter, Product product, int quantity) {
+		if (product != null) {
+			counter.put(product, quantity);
+		}
 	}
 }

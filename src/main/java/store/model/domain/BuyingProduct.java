@@ -53,16 +53,13 @@ public class BuyingProduct {
 
 	public int calculatePromotionQuantity(Products products) {
 		Product promotionProduct = products.findPromotionProduct(name);
-		if (promotionProduct != null) {
-			Promotion promotion = promotionProduct.getPromotion();
-
-			if(promotion.checkUsable() && promotionProduct.getQuantity() > 0) {
-				int applyNumber = 0;
-				while (applyNumber < quantity && applyNumber + promotion.getUnit() <= promotionProduct.getQuantity()) {
-					applyNumber += promotion.getUnit();
-				}
-				return applyNumber;
+		if (promotionProduct != null && promotionProduct.getPromotion().checkUsable() && promotionProduct.getQuantity() > 0) {
+			int applyNumber = 0;
+			while (applyNumber < quantity
+				&& applyNumber + promotionProduct.getPromotion().getUnit() <= promotionProduct.getQuantity()) {
+				applyNumber += promotionProduct.getPromotion().getUnit();
 			}
+			return applyNumber;
 		}
 		return 0;
 	}
@@ -71,10 +68,7 @@ public class BuyingProduct {
 		return Math.max(0, quantity - promotionQuantity);
 	}
 
-	public void applyPromotion(Products products) {
-		int promotionQuantity = calculatePromotionQuantity(products);
-		int generalQuantity = calculateGeneralQuantity(promotionQuantity);
-
+	public void applyPromotion(int promotionQuantity, int generalQuantity) {
 		if (promotionQuantity != 0 && generalQuantity == 0) {
 			this.promotionStatus = PromotionStatus.getStatus(true, false);
 		}
@@ -111,7 +105,6 @@ public class BuyingProduct {
 		if (!checkProduct(inventory, product[0])) {
 			throw new IllegalArgumentException(ErrorMessage.NOT_EXIST_PRODUCT_ERROR_MESSAGE);
 		}
-
 		if (Integer.parseInt(product[1]) > checkProductNumber(inventory, product[0])) {
 			throw new IllegalArgumentException(ErrorMessage.QUANTITY_OVER_ERROR_MESSAGE);
 		}

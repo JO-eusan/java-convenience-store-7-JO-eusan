@@ -84,20 +84,31 @@ public class OutputView {
 	}
 
 	public void printReceiptPrice(Receipt receipt, Products products, boolean isMembership) {
-		System.out.println(UserMessage.RECEIPT_START_PAYMENT);
+		int totalQuantity = calculateTotalQuantity(receipt);
+		int totalPrice = calculateTotalPrice(receipt, products);
+		int promotionDiscount = calculatePromotionDiscount(receipt, products);
+		int finalPrice = totalPrice - promotionDiscount - receipt.getMembershipDiscount(Membership.DEFAULT, isMembership);
 
-		int totalQuantity = 0, totalPrice = 0, promotionDiscount = 0;
-		for(String productName : receipt.getBuyingNames()) {
-			int quantity = receipt.getTotalQuantity(productName);
-			totalQuantity += receipt.getTotalQuantity(productName);
-			totalPrice += products.findGeneralProduct(productName).getPrice() * quantity;
-			promotionDiscount += receipt.getPromotionDumQuantity(productName) * products.findGeneralProduct(productName).getPrice();
-		}
+		System.out.println(UserMessage.RECEIPT_START_PAYMENT);
 		System.out.printf(UserMessage.RECEIPT_TOTAL_PAYMENT, "총구매액", totalQuantity, totalPrice);
 		System.out.printf(UserMessage.RECEIPT_DISCOUNT_FORMAT, "행사할인", Math.min(0, -promotionDiscount));
 		System.out.printf(UserMessage.RECEIPT_DISCOUNT_FORMAT, "멤버십할인", Math.min(0, -receipt.getMembershipDiscount(Membership.DEFAULT, isMembership)));
-
-		int finalPrice = totalPrice - promotionDiscount - receipt.getMembershipDiscount(Membership.DEFAULT, isMembership);
 		System.out.printf(UserMessage.RECEIPT_PAYMENT_FORMAT, "내실돈", finalPrice);
+	}
+
+	private int calculateTotalQuantity(Receipt receipt) {
+		return receipt.getBuyingNames().stream().mapToInt(receipt::getTotalQuantity).sum();
+	}
+
+	private int calculateTotalPrice(Receipt receipt, Products products) {
+		return receipt.getBuyingNames().stream()
+			.mapToInt(name -> products.findGeneralProduct(name).getPrice() * receipt.getTotalQuantity(name))
+			.sum();
+	}
+
+	private int calculatePromotionDiscount(Receipt receipt, Products products) {
+		return receipt.getBuyingNames().stream()
+			.mapToInt(name -> receipt.getPromotionDumQuantity(name) * products.findGeneralProduct(name).getPrice())
+			.sum();
 	}
 }
