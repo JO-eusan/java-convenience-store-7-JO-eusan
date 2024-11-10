@@ -20,6 +20,6 @@ public class UserMessage {
 	public static final String RECEIPT_DUM_PRODUCTS_FORMAT = "%-10s %5d\n";
 	public static final String RECEIPT_START_PAYMENT = "====================================";
 	public static final String RECEIPT_TOTAL_PAYMENT = "%-10s %5d %,10d\n";
-	public static final String RECEIPT_DISCOUNT_FORMAT = "%-10s \t -%,10d\n";
+	public static final String RECEIPT_DISCOUNT_FORMAT = "%-10s \t %,10d\n";
 	public static final String RECEIPT_PAYMENT_FORMAT = "%-10s \t %,10d\n";
 }
