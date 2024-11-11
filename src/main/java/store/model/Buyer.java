@@ -38,29 +38,33 @@ public class Buyer {
 
 	public void pickProducts(Products products) {
 		for (BuyingProduct buyingProduct : buyingProducts) {
-			int promotionQuantity = adjustPromotionQuantity(buyingProduct, products);
-			int generalQuantity = adjustGeneralQuantity(buyingProduct, promotionQuantity, products);
+			int promotionQuantity = buyingProduct.calculatePromotionQuantity(products);
+			int generalQuantity = buyingProduct.calculateGeneralQuantity(promotionQuantity);
+			promotionQuantity = checkAppliedPromotion(buyingProduct, promotionQuantity);
+			generalQuantity = checkPartialAppliedPromotion(buyingProduct, generalQuantity);
+
 			buyingProduct.setFinalQuantity(promotionQuantity, generalQuantity);
-
-			updateProductInventory(products.findPromotionProduct(buyingProduct.getName()), promotionQuantity);
-			updateProductInventory(products.findGeneralProduct(buyingProduct.getName()), generalQuantity);
+			int newGeneralQuantity = adjustPromotionProduct(buyingProduct, products, promotionQuantity, generalQuantity);
+			adjustGeneralProduct(buyingProduct, products, newGeneralQuantity);
 		}
 	}
 
-	private int adjustPromotionQuantity(BuyingProduct buyingProduct, Products products) {
-		int promotionQuantity = buyingProduct.calculatePromotionQuantity(products);
-		return checkAppliedPromotion(buyingProduct, promotionQuantity);
-	}
+	private int adjustPromotionProduct(BuyingProduct buyingProduct, Products products, int promotionQuantity, int generalQuantity) {
+		Product promotionProduct = products.findPromotionProduct(buyingProduct.getName());
 
-	private int adjustGeneralQuantity(BuyingProduct buyingProduct, int promotionQuantity, Products products) {
-		int generalQuantity = buyingProduct.calculateGeneralQuantity(promotionQuantity);
-		return checkPartialAppliedPromotion(buyingProduct, generalQuantity);
-	}
-
-	private void updateProductInventory(Product product, int quantity) {
-		if (product != null) {
-			product.subQuantity(quantity);
+		if (promotionProduct != null) {
+			promotionProduct.subQuantity(promotionQuantity);
 		}
+		if (promotionProduct != null && generalQuantity >= promotionProduct.getQuantity()) {
+			generalQuantity -= promotionProduct.getQuantity();
+			promotionProduct.subQuantity(promotionProduct.getQuantity());
+		}
+		return generalQuantity;
+	}
+
+	private void adjustGeneralProduct(BuyingProduct buyingProduct, Products products, int generalQuantity) {
+		Product generalProduct = products.findGeneralProduct(buyingProduct.getName());
+		generalProduct.subQuantity(generalQuantity);
 	}
 
 	private int checkAppliedPromotion(BuyingProduct buyingProduct, int promotionQuantity) {
