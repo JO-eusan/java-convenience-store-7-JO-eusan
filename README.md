@@ -93,11 +93,30 @@
 ---
 
 > **다음 내용을 고민하고 적용했습니다.**
-> *
+> * 객체의 정보를 담는 역할을 하는 클래스는 `domain` 패키지에서 관리
+> * `ProductStatus`와 `Membership`은 enum type으로 관리하여 복잡성 개선
+> * 영수증 출력을 위해 값을 계산하는 로직은 `View`에서 처리
+> * 객체를 위한 예외는 `Domain`에서 처리
 
 1. **Model**
-    * 
+    * domain
+      * `BuyingProduct`: 사용자가 구매한 상품명과 수량을 저장하고 프로모션 적용 가능 상태에 대한 정보를 저장
+      * `PromotionStatus`: 프로모션 상품과 일반 상품의 재고를 확인하여 상태를 나타내는 enum type
+      * `Product`: 주어진 정보를 상품 객체로 저장하고 상품에 대한 로그를 출력
+      * `Promotion`: 주어진 정보를 프로모션 객체로 저장하고 현재 날짜가 프로모션 기간 내에 있는지 확인
+      * `Membership`: 멤버십 할인율과 최대 할인 가격을 저장하는 enum type
+      * `Receipt`: 영수증 출력을 위한 정보를 저장하고 계산
+    * `Buyer`: 구매자가 `BuyingProduct`를 구매하면서 필요한 로직을 처리
+    * `Products`: 재고로 가지고 있는 `Product`를 찾거나 추가하는 로직을 처리
+    * `Promotions`: 프로모션 이름에 해당하는 `Promotion`를 저장하고 관리
 2. **View**
-    * 
+    * `InputView`: 구매할 상품과 적용 여부를 입력 받음
+    * `OutputView`: 에러 메세지와 환영 인사 그리고 재고량과 영수증까지 모든 출력을 담당
+      * 영수증에 대한 정보에서 총 구매량이나 가격 할인 가격을 계산하기 위한 로직도 포함
 3. **Controller**
-    * 
+    * `FileController`: 리소스 파일에 있는 상품과 프로모션 객체를 생성하여 자료 형태로 다음 컨트롤러에 전달
+    * `BuyingController`: 구매자 객체를 생성하여 구매부터 재고관리 그리고 영수증까지 출력을 담당
+4. **constant**
+    * `ErrorMessage`: 에러 메세지를 상수화
+    * `FilePath`: 상품들과 프로모션들의 정보를 저장해둔 리소스 파일 경로 상수화
+    * `UserMessage`: 사용자에게 보여지는 문구를 상수화 및 포맷팅
